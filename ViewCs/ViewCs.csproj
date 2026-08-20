@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Nullable>enable</Nullable>
+    <OutputType>WinExe</OutputType>
+    <Platforms>x64;x86</Platforms>
+    <RootNamespace>ViewCs</RootNamespace>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <Import Project="..\Props\OutputApps.props" />
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="10.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Commands\SimpleCommand.cs" />
+    <Compile Include="Models\SampleModel.cs" />
+    <Compile Include="ViewModels\SampleViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs" />
+    <Compile Include="WinAPI.cs" />
+  </ItemGroup>
+
+</Project>

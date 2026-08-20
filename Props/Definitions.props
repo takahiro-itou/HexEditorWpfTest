@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+
+  <PropertyGroup Label="UserMacros">
+    <SAMPLE_REPO_ROOT_DIR>..</SAMPLE_REPO_ROOT_DIR>
+    <SAMPLE_CORE_TOP_DIR>..\Core</SAMPLE_CORE_TOP_DIR>
+    <SAMPLE_CORE_INC_DIR>..\Core\Include;..\Core</SAMPLE_CORE_INC_DIR>
+    <SAMPLE_PPDEFS>SAMPLE_USE_PRE_CONFIGURED_MSVC</SAMPLE_PPDEFS>
+  </PropertyGroup>
+
+  <PropertyGroup>
+   <_PropertySheetDisplayName>Sample Property Sheet</_PropertySheetDisplayName>
+  </PropertyGroup>
+
+</Project>

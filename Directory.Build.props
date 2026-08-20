@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ImportGroup Label="ProjectConfigurations">
+    <Import Project="Props\ProjectConfigs.props" />
+  </ImportGroup>
+
+  <ImportGroup Label="PropertySheets">
+    <Import Project="Props\Definitions.props" />
+    <Import Project="Props\BuildOptions.props" />
+  </ImportGroup>
+
+</Project>
