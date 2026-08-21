@@ -1,13 +1,12 @@
 ﻿
 using System;
-using System.Drawing;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Controls.Primitives;
 
-using ViewCs;
+using WpfHexEditor;
 
 
-namespace  ViewCs.Views  {
+namespace  WpfHexEditor.Views  {
 
 public  partial class  MainWindow : Window
 {
@@ -49,4 +48,4 @@ OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 
 }   //  End class  MainWindow
 
-}   //  End of namespace  ViewCs.Views
+}   //  End of namespace  WpfHexEditor.Views
