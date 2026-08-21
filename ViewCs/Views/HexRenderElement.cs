@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
-
 namespace  WpfHexEditor.Views  {
 
 public  class  HexRenderElement : FrameworkElement
@@ -50,7 +49,7 @@ setData(
 
 
 private  void
-Rener()
+Render()
 {
     if ( this.m_data == null || this.m_data.Length == 0) { return; }
     using (DrawingContext dc = this.m_drawingVisual.RenderOpen())
@@ -83,19 +82,20 @@ Rener()
                     byte b = this.m_data[byteIndex];
                     hexBuilder.Append(b.ToString("X2") + " ");
                     asciiBuilder.Append(
-                        b >= 32 && b <= 126 ? (char)b : '.')
+                        b >= 32 && b <= 126 ? (char)b : '.');
                 } else {
                     hexBuilder.Append("   ");
                 }
             }
             drawText(dc, hexBuilder.ToString(), hexX, y, Brushes.Black);
             drawText(dc, asciiBuilder.ToString(), asciiX, y, Brushes.Blue);
+
         }
     }
 }
 
 
-private  void  drawText(DrawingContext dc, string text, double x, double y,Brush bursh)
+private  void  drawText(DrawingContext dc, string text, double x, double y,Brush brush)
 {
     var pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
     var formattedText = new FormattedText(
@@ -125,4 +125,3 @@ OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 }   //  End class  HexRenderElement
 
 }   //  End of namespace  WpfHexEditor.Views
-
