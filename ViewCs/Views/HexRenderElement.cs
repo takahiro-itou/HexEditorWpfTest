@@ -1,7 +1,7 @@
 
 namespace  WpfHexEditor  {
 
-public  clas  HexRenderElement : FrameworkElement
+public  class  HexRenderElement : FrameworkElement
 {
 }
 
