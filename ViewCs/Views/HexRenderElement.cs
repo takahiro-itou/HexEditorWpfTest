@@ -1,4 +1,7 @@
 
+using System.Windows;
+
+
 namespace  WpfHexEditor.Views  {
 
 public  class  HexRenderElement : FrameworkElement
