@@ -11,8 +11,8 @@ namespace  WpfHexEditor.Views  {
 public  partial class  MainWindow : Window
 {
 
-private   byte[]    m_dummyData;
-private   const int BytesPerRow = 16;
+private   byte[]     m_dummyData;
+private   const int  BytesPerRow = 16;
 
 //----------------------------------------------------------------
 /**   デフォルトコンストラクタ。
@@ -38,8 +38,8 @@ MainWindow_Loaded(object sender, RoutedEventArgs e)
 private  void
 UpdateScrollRange()
 {
-    int  totalRows = (int)Math.Ceiling((double)(m_dummyData.Length / BytesPerRow);
-    int  visibleRows = (int)(HexEditor.AcutualHeight / HexEditor.RowHeight);
+    int  totalRows = (int)Math.Ceiling((double)m_dummyData.Length / BytesPerRow);
+    int  visibleRows = (int)(HexEditor.ActualHeight / HexEditor.RowHeight);
 
     VerticalScroll.Minimum = 0;
     VerticalScroll.Maximum = Math.Max(0, totalRows - visibleRows);
