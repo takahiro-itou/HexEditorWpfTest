@@ -1,105 +1,69 @@
 ﻿
 using System;
-using System.Drawing;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Controls.Primitives;
 
-using ViewCs;
+using WpfHexEditor;
 
 
-namespace  ViewCs.Views  {
+namespace  WpfHexEditor.Views  {
 
 public  partial class  MainWindow : Window
 {
 
-    //----------------------------------------------------------------
-    /**   デフォルトコンストラクタ。
-    **
-    **/
-    public  MainWindow()
-    {
-        InitializeComponent();
+private   byte[]     m_dummyData;
+private   const int  BytesPerRow = 16;
 
-        this.m_taskModel = new Models.SampleModel();
-        this.m_viewModel = new ViewModels.SampleViewModel(this.m_taskModel);
+//----------------------------------------------------------------
+/**   デフォルトコンストラクタ。
+**
+**/
+public  MainWindow()
+{
+    InitializeComponent();
 
-        this.DataContext = this.m_viewModel;
+    m_dummyData = new byte[1048575];
+    new Random().NextBytes(this.m_dummyData);
+
+    HexEditor.setData(this.m_dummyData);
+    this.Loaded += MainWindow_Loaded;
+}
+
+private  void
+MainWindow_Loaded(object sender, RoutedEventArgs e)
+{
+    UpdateScrollRange();
+}
+
+private  void
+UpdateScrollRange()
+{
+    int  totalRows = (int)Math.Ceiling((double)m_dummyData.Length / BytesPerRow);
+    int  visibleRows = (int)(HexEditor.ActualHeight / HexEditor.RowHeight);
+
+    VerticalScroll.Minimum = 0;
+    VerticalScroll.Maximum = Math.Max(0, totalRows - visibleRows);
+    VerticalScroll.ViewportSize = visibleRows;
+}
+
+
+private  void
+VerticalScroll_Scroll(object sender, ScrollEventArgs e)
+{
+    HexEditor.CurrentRowOffset = (int)e.NewValue;
+}
+
+
+protected  override  void
+OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+{
+    base.OnRenderSizeChanged(sizeInfo);
+    if ( this.m_dummyData != null ) {
+        UpdateScrollRange();
     }
+}
 
-
-    //----------------------------------------------------------------
-    /**   指定したコマンドを実行する。
-    **
-    **/
-    private  void
-    runCommand()
-    {
-        IntPtr  hDisplayDC  = WinAPI.GetDC(IntPtr.Zero);
-
-        Bitmap    imgBuffer = new Bitmap(200, 100);
-        Graphics  grpBuffer = Graphics.FromImage(imgBuffer);
-
-        Color       colorBG = Color.FromArgb(0xFF, 0xFE, 0xF0, 0xBA);
-        SolidBrush  brushBG = new SolidBrush(colorBG);
-        grpBuffer.FillRectangle(brushBG, 0, 0, 200, 100);
-
-        IntPtr  hDC = grpBuffer.GetHdc();
-        WinAPI.BitBlt(hDC, 8, 8, 184, 84, hDisplayDC,
-            (int)(SystemParameters.PrimaryScreenWidth - 184),
-            (int)(SystemParameters.PrimaryScreenHeight - 84),
-            WinAPI.SRCCOPY);
-        grpBuffer.ReleaseHdc(hDC);
-
-        grpBuffer.DrawRectangle(Pens.Yellow, 50, 30, 100, 60);
-        grpBuffer.DrawPie(Pens.Red, 60, 10, 80, 80, 30, 300);
-        grpBuffer.Dispose();
-
-        Bitmap    imgCanvas = new Bitmap(300, 300);
-        Graphics  grpCanvas = Graphics.FromImage(imgCanvas);
-
-        colorBG = Color.FromArgb(0x80, 0x00, 0x00, 0xff);
-        brushBG = new SolidBrush(colorBG);
-        grpCanvas.FillRectangle(brushBG, 0, 0, 300, 300);
-        grpCanvas.Dispose();
-
-        hDC = grpCanvas.GetHdc();
-        WinAPI.BitBlt(hDC, 8, 8, 284, 284, hDisplayDC, 0, 0, WinAPI.SRCCOPY);
-        grpCanvas.ReleaseHdc(hDC);
-
-        WinAPI.ReleaseDC(IntPtr.Zero, hDisplayDC);
-
-        grpCanvas.DrawImage(imgBuffer, 50, 100, 200, 100);
-        grpCanvas.Dispose();
-
-        System.IntPtr hBitmap = imgCanvas.GetHbitmap();
-        System.Windows.Media.Imaging.BitmapSource   bmpSrc =
-            System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                hBitmap, IntPtr.Zero, Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
-        picView.Source = bmpSrc;
-    }
-
-    //----------------------------------------------------------------
-    /**
-    **
-    **/
-    private  void  mnuFileExit_Click(object sender, EventArgs e)
-    {
-        System.Windows.Application.Current.Shutdown();
-    }
-
-    //----------------------------------------------------------------
-    /**
-    **
-    **/
-    private  void  mnuRunCommand_Click(object sender, EventArgs e)
-    {
-        runCommand();
-    }
-
-    private Models.SampleModel          m_taskModel;
-    private ViewModels.SampleViewModel  m_viewModel;
 
 }   //  End class  MainWindow
 
-}   //  End of namespace  ViewCs.Views
+}   //  End of namespace  WpfHexEditor.Views
